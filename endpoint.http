@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:8000
+
+## Health Check
+GET {{baseUrl}}/health
+
+### User Creation
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+### User Token Creation
+# @name login
+POST {{baseUrl}}/users/token
+Content-Type: application/x-www-form-urlencoded
+
+username=john.doe@example.com&password=password123
+
+### Token Extraction
+@token = {{login.response.body.access_token}}
+
+### Get User Profile
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{token}}
