@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from app.autentication.router import router as auth_router
-from app.core.domain_exception import DomainException
+from app.autentication import router as auth_router
+from app.core.domain_error import DomainError
 from app.infra.database import create_tables, init_database
 
 logging.basicConfig(level=logging.INFO)
@@ -28,9 +28,9 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-@app.exception_handler(DomainException)
-async def domain_exception_handler(_: Request, exc: DomainException):
-    logger.warning(f"DomainException: {exc.message}")
+@app.exception_handler(DomainError)
+async def domain_error_handler(_: Request, exc: DomainError):
+    logger.warning(f"DomainError: {exc.message}")
     return JSONResponse(status_code=400, content={"detail": exc.message})
 
 app.include_router(auth_router, prefix="/users")

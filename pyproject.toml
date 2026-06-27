@@ -26,9 +26,17 @@ dev = [
 [tool.ruff]
 line-length = 90
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
 [tool.ruff.lint]
 select = [
-    "E",
-    "F",
-    "I"
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
 ]

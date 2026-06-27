@@ -1,4 +1,4 @@
-class DomainException(Exception):
+class DomainError(Exception):
     """Base class for domain exceptions."""
     
     def __init__(self, message: str):
@@ -10,6 +10,6 @@ class DomainException(Exception):
     
     @staticmethod
     def validate(condition: bool, message: str):
-        """Validate a condition and raise DomainException if it fails."""
+        """Validate a condition and raise DomainError if it fails."""
         if not condition:
-            raise DomainException(message)
+            raise DomainError(message)

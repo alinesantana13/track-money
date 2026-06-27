@@ -1,6 +1,6 @@
 import bcrypt
 
-from app.core.domain_exception import DomainException
+from app.core.domain_error import DomainError
 
 _BCRYPT_MAX_BYTES = 72
 
@@ -10,7 +10,7 @@ def _fits_bcrypt(password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    DomainException.validate(
+    DomainError.validate(
         _fits_bcrypt(password),
         "Password must be at most 72 bytes in UTF-8 for bcrypt compatibility.",
     )

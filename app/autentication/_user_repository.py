@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
@@ -17,7 +19,7 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(user)
         return user
-    
+
     def get_by_email(self, email: str) -> User | None:
         """
         Retrieve a user by email from the database.
@@ -25,8 +27,10 @@ class UserRepository:
         return self.db.query(User).filter(User.email == email).first()
 
 
-def get_user_repository(db: Session = Depends(get_db)) -> UserRepository:
-    """
-    Dependency function to get a UserRepository instance.
-    """
+def get_user_repository(
+    db: Annotated[Session, Depends(get_db)],
+) -> UserRepository:
     return UserRepository(db)
+
+
+UserRepositoryDep = Annotated[UserRepository, Depends(get_user_repository)]

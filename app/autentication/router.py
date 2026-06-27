@@ -1,8 +1,11 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.autentication._auth import get_email_from_token
+from app.autentication._user_repository import UserRepositoryDep
+from app.autentication.get_email_from_token import EmailFromTokenDep
 from app.autentication.schema import TokenResponse, UserCreate, UserProfileResponse
 from app.autentication.use_cases.authenticate_user import (
     InvalidCredentialsError,
@@ -16,14 +19,14 @@ from app.autentication.use_cases.register_user import (
     EmailAlreadyRegisteredError,
     register_user,
 )
-from app.autentication.user_repository import UserRepository, get_user_repository
 
 router = APIRouter()
 
 
 @router.post("", response_model=None, tags=["users"], summary="Create a new user")
 def create_user(
-    body: UserCreate, user_repository: UserRepository = Depends(get_user_repository)
+    body: UserCreate,
+    user_repository: UserRepositoryDep,
 ):
     try:
         user = register_user(body, user_repository)
@@ -43,9 +46,9 @@ def create_user(
     summary="Create a JWT token for the user",
 )
 def create_token(
-    form_data: OAuth2PasswordRequestForm = Depends(),
-    user_repository: UserRepository = Depends(get_user_repository),
-) -> TokenResponse:
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    user_repository: UserRepositoryDep,
+):
     try:
         token = authenticate_user(form_data.username, form_data.password, user_repository)
     except InvalidCredentialsError:
@@ -60,8 +63,8 @@ def create_token(
     summary="Get the profile of the authenticated user",
 )
 def user_profile(
-    email: str = Depends(get_email_from_token),
-    user_repository: UserRepository = Depends(get_user_repository),
+    email: EmailFromTokenDep,
+    user_repository: UserRepositoryDep,
 ) -> UserProfileResponse:
     try:
         user = get_user_profile(email, user_repository)

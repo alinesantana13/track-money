@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 
 from app.autentication._password import get_password_hash, verify_password
-from app.core.domain_exception import DomainException
+from app.core.domain_error import DomainError
 from app.infra.database import Base
 
 
@@ -14,18 +14,18 @@ class User(Base):
     hashed_password = Column(String(512), nullable=False)
 
     def __init__(self, name: str, email: str, password: str):
-        DomainException.validate(
+        DomainError.validate(
             name and len(name) <= 128, "Name must be at most 128 characters long."
         )
         self.name = name
 
-        DomainException.validate(
+        DomainError.validate(
             email and "@" in email and len(email) <= 128,
             "Email must be a non-empty string with a maximum length of 128 characters."
         )
         self.email = email
 
-        DomainException.validate(
+        DomainError.validate(
             password and len(password) >= 8,
             "Password must be a non-empty string with a minimum length of 8 characters.",
         )

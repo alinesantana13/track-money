@@ -27,8 +27,8 @@ def get_session_local() -> sessionmaker:
     return _session_local
 
 def get_db():
-    SessionLocal = get_session_local()
-    db = SessionLocal()
+    session_local = get_session_local()
+    db = session_local()
     try:
         yield db
     finally:
