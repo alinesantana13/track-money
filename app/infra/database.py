@@ -38,11 +38,18 @@ def init_database():
     engine = get_engine()
     with engine.connect() as connection:
         connection.execute(text("CREATE SCHEMA IF NOT EXISTS authentication"))
+        connection.execute(text("CREATE SCHEMA IF NOT EXISTS subscription"))
         connection.commit()
 
 def create_tables():
     engine = get_engine()
     from app.autentication._user import (
         User,  # noqa: F401 - Import required to register the model with SQLAlchemy
+    )
+    from app.subscription.plan._plan import (
+        Plan,  # noqa: F401 - Import required to register the model with SQLAlchemy
+    )
+    from app.subscription.user._user_plan import (
+        UserPlan,  # noqa: F401 - Import required to register the model with SQLAlchemy
     )
     Base.metadata.create_all(bind=engine)

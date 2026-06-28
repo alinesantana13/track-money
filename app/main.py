@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from app.autentication import router as auth_router
 from app.core.domain_error import DomainError
 from app.infra.database import create_tables, init_database
+from app.subscription import router as subscription_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,6 +35,7 @@ async def domain_error_handler(_: Request, exc: DomainError):
     return JSONResponse(status_code=400, content={"detail": exc.message})
 
 app.include_router(auth_router, prefix="/users")
+app.include_router(subscription_router, prefix="/subscription")
 
 @app.get("/health", tags=["Health"])
 async def health_check():

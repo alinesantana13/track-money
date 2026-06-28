@@ -26,3 +26,16 @@ username=john.doe@example.com&password=password123
 ### Get User Profile
 GET {{baseUrl}}/users/profile
 Authorization: Bearer {{token}}
+
+### Subscription Plan Selection
+POST {{baseUrl}}/subscription/select-plan
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "plan_id": 1
+}
+
+### Get User Plans
+GET {{baseUrl}}/subscription/user
+Authorization: Bearer {{token}}
