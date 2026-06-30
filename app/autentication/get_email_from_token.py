@@ -1,9 +1,12 @@
+import logging
 import os
 from typing import Annotated
 
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
+
+logger = logging.getLogger(__name__)
 
 _oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/token")
 
@@ -22,8 +25,7 @@ def get_email_from_token(
             raise ValueError("ALGORITHM environment variable is not set.")
 
         payload = jwt.decode(token, jwt_secret_key, algorithms=[algorithm])
-
-        email = payload.get("sub")
+        email: str | None = payload.get("sub")
 
         if not email:
             raise HTTPException(
@@ -31,15 +33,18 @@ def get_email_from_token(
                 detail="Could not validate credentials",
             )
         return email
+    except HTTPException:
+        raise
     except jwt.JWTError:
         raise HTTPException(
             status_code=401,
             detail="Could not validate credentials",
         ) from None
     except Exception as e:
+        logger.exception("Unexpected error while decoding token: %s", e)
         raise HTTPException(
             status_code=500,
-            detail=f"Internal server error: {str(e)}",
+            detail="Internal server error",
         ) from e
 
 

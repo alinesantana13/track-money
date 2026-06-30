@@ -1,5 +1,5 @@
-from app.autentication import QueryUserByEmail
 from app.subscription.schema import PlanResponse, UserResponse
+from app.subscription.use_cases._ports import UserLookupPort
 from app.subscription.user._user import User
 from app.subscription.user._user_repository import UserRepository
 
@@ -7,16 +7,17 @@ from app.subscription.user._user_repository import UserRepository
 def get_user(
     email: str,
     user_repository: UserRepository,
-    query_user_by_email: QueryUserByEmail,
+    query_user_by_email: UserLookupPort,
 ) -> UserResponse:
     """
     Get a user by email. If the user does not exist in the subscription context,
-    fetch their name from the authentication context.
+    fetch their name from the authentication context and persist them.
     """
     user = user_repository.get_user_by_email(email)
     if not user:
         user_auth = query_user_by_email.execute(email)
         user = User(name=user_auth.name if user_auth else email, email=email)
+        user_repository.create(user)
 
     plans = [
         PlanResponse(
@@ -24,14 +25,15 @@ def get_user(
             name=up.plan.name,
             price=up.plan.price,
             active=up.active,
-            is_free=up.plan.is_free
-        ) for up in user.user_plans
+            is_free=up.plan.is_free,
+        )
+        for up in user.user_plans
     ]
 
     return UserResponse(
         id=user.id,
         email=user.email,
         name=user.name,
-        plans=plans
+        plans=plans,
     )
 

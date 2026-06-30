@@ -1,6 +1,6 @@
-from app.autentication import QueryUserByEmail
 from app.subscription.plan._plan_repository import PlanRepository
 from app.subscription.schema import SelectPlan
+from app.subscription.use_cases._ports import UserLookupPort
 from app.subscription.user._user import User
 from app.subscription.user._user_repository import UserRepository
 
@@ -14,7 +14,7 @@ def select_plan(
     body: SelectPlan,
     user_repository: UserRepository,
     plan_repository: PlanRepository,
-    query_user_by_email: QueryUserByEmail,
+    query_user_by_email: UserLookupPort,
 ) -> None:
     """
     Assigns a subscription plan to the authenticated user.
