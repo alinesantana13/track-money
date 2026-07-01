@@ -39,12 +39,16 @@ def init_database():
     with engine.connect() as connection:
         connection.execute(text("CREATE SCHEMA IF NOT EXISTS authentication"))
         connection.execute(text("CREATE SCHEMA IF NOT EXISTS subscription"))
+        connection.execute(text("CREATE SCHEMA IF NOT EXISTS movement"))
         connection.commit()
 
 def create_tables():
     engine = get_engine()
     from app.autentication._user import (
         User,  # noqa: F401 - Import required to register the model with SQLAlchemy
+    )
+    from app.movement.bank._bank_account import (
+        BankAccount,  # noqa: F401 - Import required to register the model with SQLAlchemy
     )
     from app.subscription.plan._plan import (
         Plan,  # noqa: F401 - Import required to register the model with SQLAlchemy
