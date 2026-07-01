@@ -26,7 +26,7 @@ REST API for personal finance management, built with **FastAPI** and **PostgreSQ
 track-money/
 ├── app/
 │   ├── main.py                        # Application entry point
-│   ├── autentication/                 # Authentication bounded context (DDD)
+│   ├── authentication/                # Authentication bounded context (DDD)
 │   │   ├── _user.py                   # User domain entity
 │   │   ├── _password.py               # Password hash/verification utility
 │   │   ├── _auth.py                   # JWT token generation

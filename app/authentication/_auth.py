@@ -3,7 +3,7 @@ import os
 import pendulum
 from jose import jwt
 
-from app.autentication._user import User
+from app.authentication._user import User
 
 
 def generate_jwt_token(user: User) -> str:

@@ -1,5 +1,5 @@
-from app.autentication._auth import generate_jwt_token
-from app.autentication._user_repository import UserRepository
+from app.authentication._auth import generate_jwt_token
+from app.authentication._user_repository import UserRepository
 
 
 class InvalidCredentialsError(Exception):

@@ -9,7 +9,7 @@ class UserLookupResult(Protocol):
 class UserLookupPort(Protocol):
     """
     Port for looking up a user by email from outside the subscription context.
-    Any adapter (e.g. QueryUserByEmail from the autentication context) that
+    Any adapter (e.g. QueryUserByEmail from the authentication context) that
     implements an `execute` method with this signature satisfies this protocol.
     """
 

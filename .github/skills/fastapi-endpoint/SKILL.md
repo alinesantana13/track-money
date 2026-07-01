@@ -14,7 +14,7 @@ Create endpoints that are production-ready, maintainable, and aligned with domai
 - Standardizing endpoint structure for portfolio-level quality.
 
 ## Workflow
-1. Identify bounded context (`autentication`, `subscription`, or `movement`).
+1. Identify bounded context (`authentication`, `subscription`, or `movement`).
 2. Define request/response schemas with clear contracts.
 3. Keep router/controller thin and delegate business logic to application service/use case.
 4. Ensure domain validations stay in domain/application layer.

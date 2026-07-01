@@ -1,4 +1,4 @@
-from .get_email_from_token import get_email_from_token
+from .get_email_from_token import EmailFromTokenDep, get_email_from_token
 from .query_user_by_email import (
     QueryUserByEmail,
     QueryUserByEmailDep,
@@ -9,6 +9,7 @@ from .router import router
 __all__ = [
     "router",
     "get_email_from_token",
+    "EmailFromTokenDep",
     "QueryUserByEmail",
     "QueryUserByEmailDep",
     "get_query_user_by_email",

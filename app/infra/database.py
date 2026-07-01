@@ -44,7 +44,7 @@ def init_database():
 
 def create_tables():
     engine = get_engine()
-    from app.autentication._user import (
+    from app.authentication._user import (
         User,  # noqa: F401 - Import required to register the model with SQLAlchemy
     )
     from app.movement.bank._bank_account import (

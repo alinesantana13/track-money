@@ -38,7 +38,7 @@ This project follows **Domain-Driven Design (DDD)** in a **modular monolith** ar
 
 | Module | Responsibility |
 |---|---|
-| `autentication` | Registration, sign-in, JWT tokens |
+| `authentication` | Registration, sign-in, JWT tokens |
 | `subscription` | Plans, billing eligibility _(future)_ |
 | `movements` | Accounts, categories, transactions _(future)_ |
 

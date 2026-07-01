@@ -1,6 +1,6 @@
-from app.autentication._user import User
-from app.autentication._user_repository import UserRepository
-from app.autentication.schema import UserCreate
+from app.authentication._user import User
+from app.authentication._user_repository import UserRepository
+from app.authentication.schema import UserCreate
 
 
 class EmailAlreadyRegisteredError(Exception):

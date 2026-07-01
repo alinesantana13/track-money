@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from app.autentication._password import get_password_hash, verify_password
+from app.authentication._password import get_password_hash, verify_password
 from app.core.domain_error import DomainError
 from app.infra.database import Base
 

@@ -4,18 +4,18 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.autentication._user_repository import UserRepositoryDep
-from app.autentication.get_email_from_token import EmailFromTokenDep
-from app.autentication.schema import TokenResponse, UserCreate, UserProfileResponse
-from app.autentication.use_cases.authenticate_user import (
+from app.authentication._user_repository import UserRepositoryDep
+from app.authentication.get_email_from_token import EmailFromTokenDep
+from app.authentication.schema import TokenResponse, UserCreate, UserProfileResponse
+from app.authentication.use_cases.authenticate_user import (
     InvalidCredentialsError,
     authenticate_user,
 )
-from app.autentication.use_cases.get_user_profile import (
+from app.authentication.use_cases.get_user_profile import (
     UserNotFoundError,
     get_user_profile,
 )
-from app.autentication.use_cases.register_user import (
+from app.authentication.use_cases.register_user import (
     EmailAlreadyRegisteredError,
     register_user,
 )

@@ -1,8 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-from app.autentication.get_email_from_token import EmailFromTokenDep
-from app.autentication.query_user_by_email import QueryUserByEmailDep
+from app.authentication import EmailFromTokenDep, QueryUserByEmailDep
 from app.movement.bank._bank_account_repository import BankAccountRepositoryDep
 from app.movement.schema import BankAccountCreate
 from app.movement.use_cases.register_bank_account import (

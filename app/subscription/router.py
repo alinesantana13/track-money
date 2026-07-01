@@ -1,8 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-from app.autentication import QueryUserByEmailDep
-from app.autentication.get_email_from_token import EmailFromTokenDep
+from app.authentication import EmailFromTokenDep, QueryUserByEmailDep
 from app.subscription.plan._plan_repository import PlanRepositoryDep
 from app.subscription.schema import SelectPlan
 from app.subscription.use_cases.get_user import get_user
