@@ -39,3 +39,15 @@ Content-Type: application/json
 ### Get User Plans
 GET {{baseUrl}}/subscription/user
 Authorization: Bearer {{token}}
+
+### Movement Creation
+POST {{baseUrl}}/movement/bank-accounts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "My Bank Account",
+  "bank_name": "Banco do Brasil",
+  "account_number": "123456",
+  "initial_balance": 1000.00
+}
