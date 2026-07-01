@@ -42,4 +42,8 @@ class User(Base):
     def _deactive_plans(self):
         for user_plan in self.user_plans:
             user_plan.active = False
+
+    def get_active_plan(self) -> Plan | None:
+        active_user_plan = next((up for up in self.user_plans if up.active), None)
+        return active_user_plan.plan if active_user_plan else None
     
