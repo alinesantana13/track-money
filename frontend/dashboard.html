@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Track Money</title>
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-nav"></aside>
+    <main class="app-content">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Visao geral</span>
+          <h1 id="welcome-title">Dashboard</h1>
+          <p class="muted">Resumo da conta, assinatura ativa e contas cadastradas.</p>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="panel stat-card">
+          <span class="stat-label">Plano ativo</span>
+          <strong id="active-plan">-</strong>
+        </article>
+        <article class="panel stat-card">
+          <span class="stat-label">Contas cadastradas</span>
+          <strong id="accounts-count">0</strong>
+        </article>
+        <article class="panel stat-card">
+          <span class="stat-label">Saldo total</span>
+          <strong id="total-balance">R$ 0,00</strong>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Contas recentes</h2>
+            <a class="text-link" href="./accounts.html">Ver todas</a>
+          </div>
+          <div id="accounts-preview" class="list-stack"></div>
+        </article>
+
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Proximos passos</h2>
+          </div>
+          <ul class="check-list">
+            <li>Selecionar plano de assinatura</li>
+            <li>Cadastrar contas bancarias</li>
+            <li>Preparar contexto de movimentacoes</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="./js/pages/dashboard.js"></script>
+</body>
+</html>

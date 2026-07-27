@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil | Track Money</title>
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-nav"></aside>
+    <main class="app-content">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Authentication</span>
+          <h1>Perfil do usuario</h1>
+          <p class="muted">Dados basicos do usuario autenticado e assinatura em uso.</p>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Dados da conta</h2>
+          </div>
+          <dl id="profile-details" class="detail-list"></dl>
+        </article>
+
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Assinatura</h2>
+          </div>
+          <div id="profile-plan" class="list-stack"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="./js/pages/profile.js"></script>
+</body>
+</html>

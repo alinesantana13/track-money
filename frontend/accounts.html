@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contas | Track Money</title>
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-nav"></aside>
+    <main class="app-content">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Movement</span>
+          <h1>Contas bancarias</h1>
+          <p class="muted">Cadastre e visualize as contas disponiveis para o usuario autenticado.</p>
+        </div>
+      </section>
+
+      <section class="content-grid content-grid-wide">
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Nova conta</h2>
+          </div>
+          <form id="account-form" class="form-stack">
+            <label class="field">
+              <span>Nome da conta</span>
+              <input id="name" name="name" type="text" maxlength="24" required>
+            </label>
+            <label class="field">
+              <span>Banco</span>
+              <input id="bank-name" name="bank_name" type="text" maxlength="24" required>
+            </label>
+            <label class="field">
+              <span>Numero da conta</span>
+              <input id="account-number" name="account_number" type="text" maxlength="24" required>
+            </label>
+            <label class="field">
+              <span>Saldo inicial</span>
+              <input id="initial-balance" name="initial_balance" type="number" min="0" step="0.01" value="0">
+            </label>
+            <p id="form-error" class="inline-error" hidden></p>
+            <button id="submit-button" class="button primary" type="submit">Salvar conta</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Minhas contas</h2>
+          </div>
+          <div id="accounts-list" class="list-stack"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="./js/pages/accounts.js"></script>
+</body>
+</html>
