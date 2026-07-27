@@ -19,6 +19,9 @@ track-money/
 │   ├── assets/
 │   ├── css/
 │   ├── js/
+│   ├── Dockerfile
+│   ├── config.template.js
+│   ├── nginx.conf
 │   ├── index.html
 │   ├── login.html
 │   ├── register.html
@@ -46,35 +49,50 @@ Essa estrutura mantem tudo no mesmo projeto hoje, mas facilita separar `backend/
 
 ## Como executar
 
-### Backend
+1. Crie o arquivo de ambiente local:
 
 ```bash
-cd backend
-uv sync
-uv run uvicorn app.main:app --reload
+cp .env.example .env
 ```
 
-API: `http://localhost:8000`
-Swagger: `http://localhost:8000/docs`
-
-### Banco de dados
+2. Inicie a aplicacao completa:
 
 ```bash
-docker compose up -d
+docker compose up --build
 ```
 
-PostgreSQL: `localhost:5437`
+| Servico | URL local |
+| --- | --- |
+| Frontend | `http://localhost:8080` |
+| API | `http://localhost:8000` |
+| Swagger | `http://localhost:8000/docs` |
+| PostgreSQL | `localhost:5437` |
 
-### Frontend
+## Deploy no EasyPanel
 
-Sirva a pasta `frontend/` com um servidor estatico. Exemplo:
+Publique o Compose como uma aplicacao e associe um dominio a cada servico HTTP:
 
-```bash
-cd frontend
-python -m http.server 5500
+| Servico | Porta interna | Dominio sugerido |
+| --- | --- | --- |
+| `frontend` | `80` | `app.seu-dominio.com` |
+| `backend` | `8000` | `api.seu-dominio.com` |
+| `postgres` | `5432` | Sem dominio publico |
+
+Cadastre as variaveis abaixo no EasyPanel. Nao envie o arquivo `.env` para o repositorio.
+
+```dotenv
+POSTGRES_USER=track_money
+POSTGRES_PASSWORD=<senha-forte>
+POSTGRES_DB=track_money
+DATABASE_URL=postgresql+psycopg2://track_money:<senha-codificada-para-url>@postgres:5432/track_money
+JWT_SECRET_KEY=<segredo-longo-e-aleatorio>
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+ALGORITHM=HS256
+FRONTEND_ORIGINS=https://app.seu-dominio.com
+API_BASE_URL=https://api.seu-dominio.com
 ```
 
-Frontend: `http://localhost:5500`
+`API_BASE_URL` e gerada em `/config.js` quando o container do frontend inicia. Assim, a mesma imagem do frontend serve desenvolvimento e producao; basta alterar a variavel no EasyPanel e reiniciar somente o frontend. `FRONTEND_ORIGINS` aceita multiplos dominios separados por virgula.
 
 ## Qualidade
 
