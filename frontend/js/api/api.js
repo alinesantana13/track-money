@@ -1,8 +1,10 @@
 import { handleUnauthorized } from "../utils/auth-guard.js";
 import { getAccessToken } from "../utils/storage.js";
 
-const API_BASE_URL = window.localStorage.getItem("track-money.api-base-url")
+const configuredApiBaseUrl = window.APP_CONFIG?.API_BASE_URL?.trim()
+  || window.localStorage.getItem("track-money.api-base-url")
   || "http://localhost:8000";
+const API_BASE_URL = configuredApiBaseUrl.replace(/\/+$/, "");
 
 async function parseResponse(response) {
   const contentType = response.headers.get("content-type") || "";
