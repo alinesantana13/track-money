@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planos | Track Money</title>
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-nav"></aside>
+    <main class="app-content">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Subscription</span>
+          <h1>Planos e assinaturas</h1>
+          <p class="muted">Ative o plano gratuito agora. Os planos pagos exibem o valor e poderao ser contratados quando o pagamento estiver disponivel.</p>
+        </div>
+      </section>
+
+      <section class="content-grid content-grid-wide">
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Assinatura atual</h2>
+          </div>
+          <div id="current-plan" class="list-stack"></div>
+        </article>
+
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Catálogo de planos</h2>
+          </div>
+          <div id="plans-list" class="cards-grid"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="./js/pages/plans.js"></script>
+</body>
+</html>
