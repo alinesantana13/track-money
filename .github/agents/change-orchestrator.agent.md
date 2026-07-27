@@ -50,9 +50,9 @@ Invoke `ddd-monolith-reviewer` to assess architecture and DDD compliance for cha
 
 Invoke `unit-test-writer` to create/update unit tests for all changed use cases/domain entities.
 
-- Ensure tests follow bounded-context structure under `tests/`.
+- Ensure tests follow bounded-context structure under `backend/tests/`.
 - Ensure core rules are covered (including free-plan account limit when relevant).
-- Run `python -m pytest tests/ -v` and include result summary.
+- Run `python -m pytest backend/tests/ -v` and include result summary.
 
 If tests fail, stop and report failures with root cause.
 

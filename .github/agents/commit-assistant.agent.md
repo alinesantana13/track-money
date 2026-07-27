@@ -17,8 +17,8 @@ You are a Git commit specialist for the **track-money** project. Your role is to
 - `movement` - Accounts, categories, transactions (core domain)
 
 **Shared Layers:**
-- `app/core` - Cross-context utilities
-- `app/infra` - Technical primitives (database, external clients)
+- `backend/app/core` - Cross-context utilities
+- `backend/app/infra` - Technical primitives (database, external clients)
 
 **Tech Stack:** FastAPI, PostgreSQL, SQLAlchemy, bcrypt, Uvicorn, Ruff, Mypy, Pytest
 
@@ -245,18 +245,18 @@ After approval:
 Analyzing staged changes...
 
 Found 3 changed files in the movement bounded context:
-- app/movement/bank/_bank_account.py
-- app/movement/bank/_bank_repository.py
-- app/movement/use_cases/register_bank_account.py
+- backend/app/movement/bank/_bank_account.py
+- backend/app/movement/bank/_bank_repository.py
+- backend/app/movement/use_cases/register_bank_account.py
 
 📝 Proposed Commit Message (47/50 chars ✓):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 feat(movement): add account with plan limits
 
 Changed files:
-- app/movement/bank/_bank_account.py
-- app/movement/bank/_bank_repository.py
-- app/movement/use_cases/register_bank_account.py
+- backend/app/movement/bank/_bank_account.py
+- backend/app/movement/bank/_bank_repository.py
+- backend/app/movement/use_cases/register_bank_account.py
 
 Would you like me to proceed with this commit and push?
 ```

@@ -11,7 +11,7 @@ You are a Python unit-testing expert specialized in the **track-money** project.
 ## Project Architecture Summary
 
 ```
-app/
+backend/app/
   authentication/        # Bounded context: sign-up, sign-in, credentials
     _user.py             # Domain entity User (name, email, hashed_password)
     use_cases/
@@ -51,10 +51,10 @@ Cross-context communication happens exclusively through **Protocol ports** defin
 
 ## Test Location Convention
 
-Mirror the `app/` structure inside `tests/`:
+Mirror the `backend/app/` structure inside `backend/tests/`:
 
 ```
-tests/
+backend/tests/
   authentication/
     use_cases/
       test_register_user.py

@@ -7,6 +7,7 @@
 - Docker and Docker Compose
 
 ```bash
+cd backend
 uv sync
 ```
 
@@ -16,6 +17,7 @@ uv sync
 
 ```bash
 # Linter and formatter
+cd backend
 uv run ruff check .
 uv run ruff format .
 
@@ -38,19 +40,19 @@ This project follows **Domain-Driven Design (DDD)** in a **modular monolith** ar
 
 | Module | Responsibility |
 |---|---|
-| `authentication` | Registration, sign-in, JWT tokens |
-| `subscription` | Plans, billing eligibility _(future)_ |
-| `movements` | Accounts, categories, transactions _(future)_ |
+| `backend/app/authentication` | Registration, sign-in, JWT tokens |
+| `backend/app/subscription` | Plans, billing eligibility _(future)_ |
+| `backend/app/movement` | Accounts, categories, transactions _(future)_ |
 
 **Rule:** modules must not import directly from each other. Cross-context communication happens through defined interfaces or shared kernel only.
 
 ### Layer responsibilities
 
 ```
-router.py          → HTTP only: receive request, call use case, return response
-use_cases/         → Business logic: pure functions, no FastAPI dependencies
-domain (_user.py)  → Entities and value objects with invariants
-infra              → Database, external adapters
+backend/app/**/router.py     → HTTP only: receive request, call use case, return response
+backend/app/**/use_cases/    → Business logic: pure functions, no FastAPI dependencies
+backend/app/**/_*.py         → Entities and value objects with invariants
+backend/app/infra            → Database, external adapters
 ```
 
 #### Router (`router.py`)

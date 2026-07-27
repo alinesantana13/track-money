@@ -1,226 +1,99 @@
-# 💰 Track Money
+# Track Money
 
-REST API for personal finance management, built with **FastAPI** and **PostgreSQL**, following **Domain-Driven Design (DDD)** principles in a modular monolith architecture.
+Monorepo de portfolio para um sistema de gestao financeira com **backend FastAPI em DDD** e **frontend em HTML, CSS e JavaScript puro**.
 
----
+## Estrutura
 
-## 🚀 Technologies
-
-| Layer | Technology |
-|---|---|
-| Web framework | [FastAPI](https://fastapi.tiangolo.com/) |
-| Database | [PostgreSQL 18](https://www.postgresql.org/) |
-| ORM | [SQLAlchemy 2](https://www.sqlalchemy.org/) |
-| Password hashing | [bcrypt](https://pypi.org/project/bcrypt/) |
-| ASGI server | [Uvicorn](https://uvicorn.dev/) |
-| Package manager | [uv](https://docs.astral.sh/uv/) |
-| Linter / Formatter | [Ruff](https://docs.astral.sh/ruff/) |
-| Type checker | [Mypy](https://mypy.readthedocs.io/) |
-| Tests | [Pytest](https://docs.pytest.org/) |
-
----
-
-## 📁 Project structure
-
-```
+```text
 track-money/
-├── app/
-│   ├── main.py                        # Application entry point
-│   ├── authentication/                # Authentication bounded context (DDD)
-│   │   ├── _user.py                   # User domain entity
-│   │   ├── _password.py               # Password hash/verification utility
-│   │   ├── _auth.py                   # JWT token generation
-│   │   ├── _user_repository.py        # User persistence
-│   │   ├── get_email_from_token.py    # JWT decode dependency
-│   │   ├── query_user_by_email.py     # Cross-context user query (shared adapter)
-│   │   ├── router.py                  # HTTP endpoints
-│   │   ├── schema.py                  # Pydantic schemas (input/output)
-│   │   └── use_cases/                 # Use cases: register, authenticate, profile
-│   ├── subscription/                  # Subscription bounded context (DDD)
-│   │   ├── plan/                      # Plan domain model and repository
-│   │   ├── user/                      # Subscription user model and repository
-│   │   ├── use_cases/                 # Use cases: select plan, get user
-│   │   ├── router.py                  # HTTP endpoints
-│   │   └── schema.py                  # Pydantic schemas
-│   ├── movement/                      # Movement bounded context — core domain (DDD)
-│   │   ├── bank/                      # BankAccount domain entity and repository
-│   │   ├── use_cases/                 # Use cases: register bank account
-│   │   ├── router.py                  # HTTP endpoints
-│   │   └── schema.py                  # Pydantic schemas
-│   ├── core/
-│   │   └── domain_error.py            # Base domain exception
-│   └── infra/
-│       └── database.py                # SQLAlchemy configuration and session
-├── tests/                             # Automated tests
-├── docker-compose.yml                 # PostgreSQL via Docker
-├── init.sql                           # Database initialization script
-├── endpoint.http                      # HTTP request examples
-└── pyproject.toml                     # Dependencies and configuration
+├── backend/
+│   ├── app/
+│   ├── tests/
+│   ├── .env.example
+│   ├── Dockerfile
+│   ├── endpoint.http
+│   ├── init.sql
+│   ├── pyproject.toml
+│   └── README.md
+├── frontend/
+│   ├── assets/
+│   ├── css/
+│   ├── js/
+│   ├── index.html
+│   ├── login.html
+│   ├── register.html
+│   ├── dashboard.html
+│   ├── accounts.html
+│   ├── profile.html
+│   └── plans.html
+├── docs/
+│   └── architecture.md
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── docker-compose.yml
+└── LICENSE
 ```
 
----
+## Organizacao
 
-## ⚙️ Prerequisites
+- `backend/` e autocontido: codigo FastAPI, testes, configuracao Python e artefatos de banco.
+- `frontend/` concentra a interface estatica e pode ser publicada separadamente depois.
+- `docs/` guarda a documentacao de arquitetura do monorepo.
+- A raiz fica responsavel por orquestracao, CI e documentacao principal.
 
-- [Python 3.14+](https://www.python.org/)
-- [uv](https://docs.astral.sh/uv/getting-started/installation/)
-- [Docker](https://www.docker.com/) and Docker Compose
+Essa estrutura mantem tudo no mesmo projeto hoje, mas facilita separar `backend/` e `frontend/` em repositorios distintos no futuro.
 
----
+## Como executar
 
-## 🏁 How to run
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd track-money
-```
-
-### 2. Install dependencies
+### Backend
 
 ```bash
+cd backend
 uv sync
+uv run uvicorn app.main:app --reload
 ```
 
-### 3. Start the database
+API: `http://localhost:8000`
+Swagger: `http://localhost:8000/docs`
+
+### Banco de dados
 
 ```bash
 docker compose up -d
 ```
 
-PostgreSQL will be available at `localhost:5437`.
+PostgreSQL: `localhost:5437`
 
-### 4. Start the API
+### Frontend
 
-```bash
-uv run uvicorn app.main:app --reload
-```
-
-The API will be available at `http://localhost:8000`.
-
-Interactive documentation (Swagger): `http://localhost:8000/docs`
-
----
-
-## 🔌 Endpoints
-
-### Health Check
-
-```http
-GET /health
-```
-
-**Response:**
-```json
-{ "status": "ok" }
-```
-
----
-
-### Create user
-
-```http
-POST /users/
-Content-Type: application/json
-
-{
-  "name": "John Doe",
-  "email": "john@email.com",
-  "password": "password123"
-}
-```
-
-**Success response — `201 Created`:**
-```json
-{
-  "message": "User created successfully",
-  "user_id": 1
-}
-```
-
-**Domain error response — `400 Bad Request`:**
-```json
-{
-  "detail": "Email must be a non-empty string with a maximum length of 128 characters."
-}
-```
-
-#### Domain validation rules
-
-| Field | Rule |
-|---|---|
-| `name` | Required, max 128 characters |
-| `email` | Required, must contain `@`, max 128 characters |
-| `password` | Required, min 8 characters and max 72 bytes in UTF-8 (stored with bcrypt) |
-
----
-
-### Create bank account
-
-Requires authentication.
-
-```http
-POST /movement/bank-accounts
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "name": "My Account",
-  "bank_name": "Banco do Brasil",
-  "account_number": "123456",
-  "initial_balance": 1000.00
-}
-```
-
-**Success response — `201 Created`:**
-```json
-{ "message": "Bank account created successfully" }
-```
-
-**Domain validation rules**
-
-| Field | Rule |
-|---|---|
-| `name` | Required, max 24 characters |
-| `bank_name` | Required, max 24 characters |
-| `account_number` | Required, max 24 characters |
-| `initial_balance` | Optional, non-negative decimal (default `0.0`) |
-
----
-
-## 🗄️ Database
-
-The application uses the `authentication` schema within the `track_money_db` database.
-
-| Parameter | Default value |
-|---|---|
-| Host | `localhost` |
-| Port | `5437` |
-| Database | `track_money_db` |
-| User | `postgres` |
-| Password | `postgres` |
-
-To use a custom URL, set the environment variable:
+Sirva a pasta `frontend/` com um servidor estatico. Exemplo:
 
 ```bash
-DATABASE_URL=postgresql://user:password@host:port/dbname
+cd frontend
+python -m http.server 5500
 ```
 
----
+Frontend: `http://localhost:5500`
 
-## 🧪 Tests
+## Qualidade
 
-```bash
-uv run pytest
-```
-
-## 🔍 Linter and type check
+### Backend
 
 ```bash
-# Linter
+cd backend
 uv run ruff check .
-
-# Type checker
 uv run mypy .
+uv run pytest -v
 ```
+
+### Frontend
+
+```bash
+Get-ChildItem frontend\js -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }
+```
+
+## Documentacao adicional
+
+- Arquitetura: `docs/architecture.md`
+- Guia do backend: `backend/README.md`
